@@ -110,3 +110,12 @@ jobs:
           publish: true
           args: ${{ matrix.args }}
           renameArtifacts: 'PakePlus'
+          - name: 禁止 .js、.md 檔案進入資源包
+  if: matrix.platform == 'macos-latest'
+  run: |
+    if find ./PakePlus/Assets.xcassets \( -name "*.js" -o -name "*.md" \) | grep .; then
+      echo "不允許 js 或 md 檔進資源包，請刪除！"
+      exit 1
+    fi
+
+
